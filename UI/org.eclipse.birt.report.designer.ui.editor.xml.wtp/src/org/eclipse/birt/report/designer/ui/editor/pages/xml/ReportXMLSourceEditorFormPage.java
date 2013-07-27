@@ -859,11 +859,13 @@ public class ReportXMLSourceEditorFormPage extends ReportFormPage implements
 		{
 			ModuleHandle oldModel = getModel( );
 			unhookModelEventManager( oldModel );
-			getCommandStack( oldModel ).removeCommandStackListener( getCommandStackListener( ) );
+			if (oldModel != null) {
+				getCommandStack( oldModel ).removeCommandStackListener( getCommandStackListener( ) );
 
-			SessionHandleAdapter.getInstance( )
+				SessionHandleAdapter.getInstance( )
 					.getMediator( oldModel )
 					.removeColleague( this );
+			}
 
 			// refersh the model
 			ModuleHandle newModel = provider.getReportModuleHandle( getEditorInput( ),

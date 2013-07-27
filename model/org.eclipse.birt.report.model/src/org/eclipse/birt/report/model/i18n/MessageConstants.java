@@ -364,4 +364,7 @@ public interface MessageConstants
 	public static final String SEMANTIC_ERROR_TABLE_COLUMN_INCONSISTENT_RELATIVE_UNIT = "Error.SemanticError.TABLE_COLUMN_INCONSISTENT_RELATIVE_UNIT"; //$NON-NLS-1$	
 	public static final String SEMANTIC_ERROR_TABLE_COLUMN_ILLEGAL_PERCENTAGE = "Error.SemanticError.TABLE_COLUMN_ILLEGAL_PERCENTAGE"; //$NON-NLS-1$			
 	
+	// Xml cooments
+	public static final String DESIGN_EXCEPTION_INVALID_COMMENT_PLACEMENT = "Error.XMLParserException.DESIGN_EXCEPTION_INVALID_COMMENT_PLACEMENT"; //$NON-NLS-1$		
+	
 }

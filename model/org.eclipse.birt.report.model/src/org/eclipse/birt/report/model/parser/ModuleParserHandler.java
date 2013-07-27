@@ -20,6 +20,7 @@ import java.util.Map;
 import org.eclipse.birt.report.model.api.DesignFileException;
 import org.eclipse.birt.report.model.api.ModuleOption;
 import org.eclipse.birt.report.model.api.command.NameException;
+import org.eclipse.birt.report.model.api.elements.ReportDesignConstants;
 import org.eclipse.birt.report.model.api.metadata.MetaDataConstants;
 import org.eclipse.birt.report.model.api.util.StringUtil;
 import org.eclipse.birt.report.model.core.DesignElement;
@@ -40,12 +41,14 @@ import org.eclipse.birt.report.model.elements.ReportItem;
 import org.eclipse.birt.report.model.elements.Theme;
 import org.eclipse.birt.report.model.elements.VariableElement;
 import org.eclipse.birt.report.model.elements.ExtendedItem.StatusInfo;
+import org.eclipse.birt.report.model.elements.XmlComment;
 import org.eclipse.birt.report.model.elements.interfaces.IReportDesignModel;
 import org.eclipse.birt.report.model.elements.interfaces.IThemeModel;
 import org.eclipse.birt.report.model.elements.olap.TabularDimension;
 import org.eclipse.birt.report.model.metadata.ElementDefn;
 import org.eclipse.birt.report.model.metadata.NamePropertyType;
 import org.eclipse.birt.report.model.util.AbstractParseState;
+import org.eclipse.birt.report.model.util.AnyElementState;
 import org.eclipse.birt.report.model.util.ModelUtil;
 import org.eclipse.birt.report.model.util.VersionUtil;
 import org.eclipse.birt.report.model.util.XMLParserException;
@@ -263,6 +266,7 @@ public abstract class ModuleParserHandler extends XMLParserHandler
 		}
 
 		newState.setElementName( qName );
+		
 		pushState( newState );
 	}
 
@@ -845,7 +849,118 @@ public abstract class ModuleParserHandler extends XMLParserHandler
 		 */
 		public void comment( char[] ch, int start, int length )
 				throws SAXException
-		{
+		{	
+			
+				AbstractParseState newState = handler.topState.startElement( ReportDesignConstants.XML_COMMENT );
+				if (!(newState instanceof XmlCommentState)) {
+					handler.getErrorHandler( ).semanticError(
+							new XMLParserException(
+									XMLParserException.DESIGN_EXCEPTION_INVALID_COMMENT_PLACEMENT ) );
+					return;
+				}
+				handler.errorHandler.setCurrentElement( ReportDesignConstants.XML_COMMENT );
+				newState.parseAttrs( new Attributes() {
+					
+					@Override
+					public String getValue(String uri, String localName) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getValue(String qName) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getValue(int index) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getURI(int index) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getType(String uri, String localName) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getType(String qName) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getType(int index) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getQName(int index) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public String getLocalName(int index) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public int getLength() {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+					
+					@Override
+					public int getIndex(String uri, String localName) {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+					
+					@Override
+					public int getIndex(String qName) {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+				} );
+				AbstractParseState jumpToState = newState.jumpTo( );
+				if ( jumpToState != null )
+				{
+					handler.pushState( jumpToState );
+					return;
+				}
+	
+				newState.setElementName( ReportDesignConstants.XML_COMMENT );
+
+				((XmlCommentState) newState).setComment((new String(ch)).substring(start, length));
+				
+
+				handler.pushState( newState );
+			
+				// End Comment
+				AbstractParseState state = handler.topState;
+				state.end( );
+				AbstractParseState endState = handler.stateStack.pop( );
+				if ( handler.stateStack.size( ) > 0 )
+				{
+					handler.topState = handler.stateStack.lastElement( );
+					handler.topState.endElement( endState );
+				}
+
+				if ( !handler.stateStack.isEmpty( ) )
+					handler.topState.endElement( state );				
+			
+			
 		}
 
 		/*

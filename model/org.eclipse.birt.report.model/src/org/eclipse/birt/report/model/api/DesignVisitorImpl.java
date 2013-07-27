@@ -70,6 +70,7 @@ import org.eclipse.birt.report.model.elements.TemplateReportItem;
 import org.eclipse.birt.report.model.elements.TextDataItem;
 import org.eclipse.birt.report.model.elements.TextItem;
 import org.eclipse.birt.report.model.elements.Theme;
+import org.eclipse.birt.report.model.elements.XmlComment;
 import org.eclipse.birt.report.model.elements.olap.OdaCube;
 import org.eclipse.birt.report.model.elements.olap.OdaDimension;
 import org.eclipse.birt.report.model.elements.olap.OdaHierarchy;
@@ -149,6 +150,11 @@ class DesignVisitorImpl
 	protected void visitAutoText( AutoTextHandle obj )
 	{
 		visitReportItem( obj );
+	}
+	
+	protected void visitXmlComment( XmlCommentHandle obj )
+	{
+		//visitXmlComment( obj );
 	}
 
 	/**
@@ -1026,6 +1032,11 @@ class DesignVisitorImpl
 		public void visitAutoText( AutoText obj )
 		{
 			DesignVisitorImpl.this.visitAutoText( obj.handle( module ) );
+		}
+		
+		public void visitXmlComment( XmlComment obj )
+		{
+			DesignVisitorImpl.this.visitXmlComment( obj.handle( module ) );
 		}
 
 		/**

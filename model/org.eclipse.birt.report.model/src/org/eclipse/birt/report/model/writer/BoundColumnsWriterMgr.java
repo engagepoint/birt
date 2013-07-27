@@ -43,6 +43,7 @@ import org.eclipse.birt.report.model.elements.TableItem;
 import org.eclipse.birt.report.model.elements.TemplateReportItem;
 import org.eclipse.birt.report.model.elements.TextDataItem;
 import org.eclipse.birt.report.model.elements.TextItem;
+import org.eclipse.birt.report.model.elements.XmlComment;
 import org.eclipse.birt.report.model.elements.interfaces.IDataItemModel;
 import org.eclipse.birt.report.model.elements.interfaces.IGroupElementModel;
 import org.eclipse.birt.report.model.elements.interfaces.IListingElementModel;
@@ -478,6 +479,22 @@ final class BoundColumnsWriterMgr extends BoundColumnsMgr
 		processedElement.add( element );
 
 		super.dealLabel( element, module );
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.birt.report.model.util.BoundColumnsMgr#dealXmlComment(org.eclipse
+	 * .birt.report.model.elements.XmlComment ,
+	 * org.eclipse.birt.report.model.core.Module)
+	 */
+	protected void dealXmlComment( XmlComment element, Module module )
+	{
+		if ( version != null || processedElement.contains( element ) )
+			return;
+
+		processedElement.add( element );
 	}
 
 	/*

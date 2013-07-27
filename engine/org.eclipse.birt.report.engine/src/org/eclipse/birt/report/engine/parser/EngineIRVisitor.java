@@ -129,8 +129,10 @@ import org.eclipse.birt.report.model.api.elements.structures.TOC;
 import org.eclipse.birt.report.model.api.metadata.DimensionValue;
 import org.eclipse.birt.report.model.api.metadata.IElementPropertyDefn;
 import org.eclipse.birt.report.model.api.metadata.IPropertyType;
+import org.eclipse.birt.report.model.core.DesignElement;
 import org.eclipse.birt.report.model.core.Module;
 import org.eclipse.birt.report.model.elements.Style;
+import org.eclipse.birt.report.model.elements.XmlComment;
 import org.eclipse.birt.report.model.elements.interfaces.ICellModel;
 import org.eclipse.birt.report.model.elements.interfaces.IGroupElementModel;
 import org.eclipse.birt.report.model.elements.interfaces.IMasterPageModel;
@@ -411,8 +413,10 @@ public class EngineIRVisitor extends DesignVisitor
 		SlotHandle bodySlot = handle.getBody( );
 		for ( int i = 0; i < bodySlot.getCount( ); i++ )
 		{
+			DesignElement element = bodySlot.getElement().getSlot( 6 ).getContent( i );
 			apply( bodySlot.get( i ) );
-			if ( currentElement != null )
+			logger.log(Level.SEVERE, "version = 1.0.0");
+			if ( currentElement != null && (currentElement instanceof ReportItemDesign) && !(element instanceof XmlComment))
 			{
 				report.addContent( (ReportItemDesign) currentElement );
 			}
@@ -709,6 +713,11 @@ public class EngineIRVisitor extends DesignVisitor
 		labelItem.setHelpText( handle.getHelpTextKey( ), handle.getHelpText( ) );
 		
 		setCurrentElement( labelItem );
+	}
+	
+	public void visitXmlComment( XmlComment handle )
+	{
+		return;
 	}
 	
 	public void visitAutoText( AutoTextHandle handle )

@@ -11,6 +11,8 @@
 
 package org.eclipse.birt.report.model.parser;
 
+import org.eclipse.birt.report.model.api.elements.ReportDesignConstants;
+
 /**
  * 
  */
@@ -188,5 +190,8 @@ interface ParserSchemaConstants
 	int VALUE_TAG = DesignSchemaConstants.VALUE_TAG.toLowerCase( ).hashCode( );
 
 	int REF_ENTRY_TAG = DesignSchemaConstants.REF_ENTRY_TAG.toLowerCase( )
+			.hashCode( );
+	
+	int XML_COMMENT = ReportDesignConstants.XML_COMMENT.toLowerCase( )
 			.hashCode( );
 }

@@ -256,8 +256,12 @@ public class ReportEditorProxy extends EditorPart implements
 	 * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
 	 */
 	public boolean isSaveAsAllowed( )
-	{
-		return instance.isSaveAsAllowed( );
+	{	
+		if (instance != null) {
+			return instance.isSaveAsAllowed( );
+		} else {
+			return true;			
+		}
 	}
 
 	/*

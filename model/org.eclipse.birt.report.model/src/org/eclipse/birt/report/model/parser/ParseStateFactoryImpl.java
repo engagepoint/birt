@@ -208,6 +208,9 @@ class ParseStateFactoryImpl
 		if ( ReportDesignConstants.DATA_GROUP_ELEMENT
 				.equalsIgnoreCase( elementName ) )
 			return new DataGroupState( handler, container, propName );
+		if ( ReportDesignConstants.XML_COMMENT
+				.equalsIgnoreCase( elementName ) )
+			return new XmlCommentState( handler, container, propName );
 		return null;
 	}
 

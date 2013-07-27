@@ -235,6 +235,8 @@ interface IDesignSchemaConstants
 	static final String VIEW_ACTION_ATTRIB = "viewAction"; //$NON-NLS-1$
 	static final String XML_PROPERTY_TAG = "xml-property"; //$NON-NLS-1$
 	static final String XMLNS_ATTRIB = "xmlns"; //$NON-NLS-1$
+	static final String XML_COMMENT_START = "<!--"; //$NON-NLS-1$
+	static final String XML_COMMENT_END = "-->"; //$NON-NLS-1$
 	/**
 	 * @deprecated by the {@link #TEXT_DATA_TAG}
 	 */

@@ -13,6 +13,7 @@ package org.eclipse.birt.report.model.parser;
 
 import org.eclipse.birt.report.model.api.core.IModuleModel;
 import org.eclipse.birt.report.model.api.elements.DesignChoiceConstants;
+import org.eclipse.birt.report.model.api.elements.ReportDesignConstants;
 import org.eclipse.birt.report.model.core.DesignElement;
 import org.eclipse.birt.report.model.elements.ReportDesign;
 import org.eclipse.birt.report.model.elements.interfaces.IReportDesignModel;
@@ -168,6 +169,10 @@ public class ReportState extends ModuleState
 			if ( ParserSchemaConstants.TEMPLATE_REPORT_ITEM_TAG == tagValue )
 				return new TemplateReportItemState( handler, container,
 						ReportDesign.BODY_SLOT );
+			if ( ParserSchemaConstants.XML_COMMENT == tagValue )
+				return new XmlCommentState( handler, container,
+						ReportDesign.BODY_SLOT );
+			
 			return super.startElement( tagName );
 		}
 	}

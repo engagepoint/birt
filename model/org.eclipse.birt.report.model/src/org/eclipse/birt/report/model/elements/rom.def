@@ -2937,6 +2937,13 @@
     <StyleProperty name="widows"/>
     <StyleProperty name="orphans"/>
   </Element>
+  
+  <Element allowsUserProperties="false" canExtend="false" displayNameID="Element.XmlComment" extends="ReportItem" hasStyle="false" isAbstract="false" isNameRequired="false" javaClass="org.eclipse.birt.report.model.elements.XmlComment" name="XmlComment" selector="XmlComment" since="1.0" xmlName="XmlComment">
+    <Property displayNameID="Element.XmlComment.content" name="content" runtimeSettable="false" since="1.0" type="literalString"/>
+  </Element>
+  
+  
+  
   <Element allowsUserProperties="false" canExtend="false" displayNameID="Element.ListingGroup" hasStyle="false" isAbstract="true" name="ListingGroup" nameSpace="none" >
     <Method context="factory" displayNameID="Element.ListingGroup.onCreate" name="onCreate" since="2.3" toolTipID="Element.ListingGroup.onCreate.toolTip">
       <Argument name="this" tagID="Element.ListingGroup.onCreate.this" type="org.eclipse.birt.report.engine.api.script.instance.IReportElementInstance"/>

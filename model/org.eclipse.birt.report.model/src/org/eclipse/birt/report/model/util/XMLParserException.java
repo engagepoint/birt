@@ -97,6 +97,13 @@ public class XMLParserException extends SAXException
 	 */
 
 	public static final String DESIGN_EXCEPTION_INVALID_INTEGER = MessageConstants.XML_PARSER_EXCEPTION_INVALID_INTEGER;
+	
+	
+	/**
+	 * An integer attribute contains an invalid value.
+	 */
+
+	public static final String DESIGN_EXCEPTION_INVALID_COMMENT_PLACEMENT = MessageConstants.DESIGN_EXCEPTION_INVALID_COMMENT_PLACEMENT;
 
 	/**
 	 * Constructor.

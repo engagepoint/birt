@@ -298,10 +298,12 @@ public class GridItem extends ReportItem
 		int count = rows.getCount( );
 		for ( int i = 0; i < count; i++ )
 		{
-			TableRow row = (TableRow) rows.getContent( i );
-			int cols = row.getColumnCount( module );
-			if ( cols > maxCols )
-				maxCols = cols;
+			if (rows.getContent( i ) instanceof TableRow) {
+				TableRow row = (TableRow) rows.getContent( i );
+				int cols = row.getColumnCount( module );
+				if ( cols > maxCols )
+					maxCols = cols;
+			}
 		}
 		return maxCols;
 	}

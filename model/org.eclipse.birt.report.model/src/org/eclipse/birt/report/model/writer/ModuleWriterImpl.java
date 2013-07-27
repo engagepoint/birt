@@ -111,6 +111,7 @@ import org.eclipse.birt.report.model.elements.TextDataItem;
 import org.eclipse.birt.report.model.elements.TextItem;
 import org.eclipse.birt.report.model.elements.Translation;
 import org.eclipse.birt.report.model.elements.VariableElement;
+import org.eclipse.birt.report.model.elements.XmlComment;
 import org.eclipse.birt.report.model.elements.interfaces.IAbstractScalarParameterModel;
 import org.eclipse.birt.report.model.elements.interfaces.IAbstractThemeModel;
 import org.eclipse.birt.report.model.elements.interfaces.IAutoTextModel;
@@ -2012,6 +2013,12 @@ abstract class ModuleWriterImpl extends ElementVisitor
 		property( obj, ITextItemModel.HAS_EXPRESSION_PROP );
 
 		writer.endElement( );
+	}
+	
+	
+	public void visitXmlComment( XmlComment obj )
+	{
+		writer.textXmlComment( obj.getComment() );
 	}
 
 	/*

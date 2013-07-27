@@ -18,8 +18,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Stack;
 
+import org.eclipse.birt.report.model.api.elements.ReportDesignConstants;
 import org.eclipse.birt.report.model.api.util.StringUtil;
 import org.eclipse.birt.report.model.api.util.UnicodeUtil;
+import org.eclipse.birt.report.model.parser.DesignSchemaConstants;
 
 /**
  * General-purpose utility to write an XML file. Provides methods for writing
@@ -258,6 +260,13 @@ public class XMLWriter
 		closeTag( );
 		emitStartTag( tagName );
 	}
+	
+	public final void startXmlComment( String tagName  )
+	{
+		flushPendingElements( );
+		closeTag( );
+		emitStartXmlComment( tagName );
+	}
 
 	/**
 	 * Implementation method to write a &ltTag start tag.
@@ -272,6 +281,14 @@ public class XMLWriter
 		elementActive = true;
 		out.print( "<" ); //$NON-NLS-1$ 
 		out.print( tagName );
+		attrCount = 0;
+	}
+	
+	
+	protected void emitStartXmlComment( String tagName )
+	{
+		elementStack.push( tagName );
+		elementActive = true;
 		attrCount = 0;
 	}
 
@@ -329,7 +346,6 @@ public class XMLWriter
 		out.print( " " ); //$NON-NLS-1$ 
 		out.print( attrName );
 		out.print( "=\"" ); //$NON-NLS-1$ 
-
 		// Scan the string character-by-character to look for non-ASCII
 		// characters that must be hex encoded.
 
@@ -448,6 +464,26 @@ public class XMLWriter
 		}
 		printLine( );
 		elementActive = false;
+		
+	}
+	
+	public void endXmlComment( )
+	{
+		// Check if we never actually wrote the tag because it had
+				// no content.
+
+				if ( !pendingElementStack.isEmpty( ) )
+				{
+					pendingElementStack.pop( );
+					return;
+				}
+
+				// Close a tag for which the start tag was written.
+
+				assert elementStack.size( ) > 0;
+				String tagName = elementStack.pop( );
+				elementActive = false;
+				
 	}
 
 	/**
@@ -469,11 +505,12 @@ public class XMLWriter
 		for ( int i = 0; i < len; i++ )
 		{
 			char c = text.charAt( i );
-			if ( c == '&' )
+			if ( c == '&' ) {
 				out.print( "&amp;" ); //$NON-NLS-1$ 
-			else if ( c == '<' )
+			}	
+			else if ( c == '<' ) {
 				out.print( "&lt;" ); //$NON-NLS-1$
-
+			}
 			// according to XML specification
 			// http://www.w3.org/TR/2006/REC-xml11-20060816/#syntax. The right
 			// angle bracket (>) may be represented using the string "&gt;", and
@@ -483,10 +520,11 @@ public class XMLWriter
 			else if ( c == '>' )
 			{
 				if ( i - 2 >= 0 && text.charAt( i - 1 ) == ']'
-						&& text.charAt( i - 2 ) == ']' )
+						&& text.charAt( i - 2 ) == ']' ) {
 					out.print( "&gt;" ); //$NON-NLS-1$
-				else
+				} else {
 					out.print( c );
+				}
 			}
 			else if ( c == '\n' )
 			{
@@ -496,9 +534,49 @@ public class XMLWriter
 			{
 				out.print("&#13;"); //$NON-NLS-1$
 			}
-			else
+			else {
 				out.print( c );
+			}
 		}
+		
+	}
+	
+	/**
+	 * Write XML comment.
+	 * 
+	 * @param text
+	 *            the text to write
+	 */
+
+	public void textXmlComment( String text )
+	{	
+		startXmlComment(ReportDesignConstants.XML_COMMENT);
+		
+		text =  new StringBuilder(DesignSchemaConstants.XML_COMMENT_START).append(text).append(DesignSchemaConstants.XML_COMMENT_END).append("\n").toString(); 
+		if ( text == null )
+			return;
+
+		// Write the text character-by-character to encode special characters.
+
+		int len = text.length( );
+		for ( int i = 0; i < len; i++ )
+		{
+			char c = text.charAt( i );
+
+			if ( c == '\n' )
+			{
+				doPrintLine( );
+			}
+			else if( c =='\r')
+			{
+				out.print("&#13;"); //$NON-NLS-1$
+			}
+			else {
+				out.print( c );
+			}	
+		}
+		
+		endXmlComment( );
 	}
 
 	/**
@@ -556,8 +634,9 @@ public class XMLWriter
 			char c = text.charAt( i );
 			if ( c == '\n' )
 				doPrintLine( );
-			else
+			else {
 				out.print( c );
+			}	
 		}
 	}
 

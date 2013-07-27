@@ -126,6 +126,18 @@ class ElementVisitorImpl
 	{
 		visitReportItem( obj );
 	}
+	
+	/**
+	 * Visits the label element.
+	 * 
+	 * @param obj
+	 *            the label to traverse
+	 */
+
+	public void visitXmlComment( XmlComment obj )
+	{
+
+	}
 
 	/**
 	 * Visits the special field element.

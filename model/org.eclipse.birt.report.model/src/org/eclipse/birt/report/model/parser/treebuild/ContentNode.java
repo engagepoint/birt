@@ -34,6 +34,7 @@ public class ContentNode implements Cloneable
 	protected LinkedHashMap<String, Object> attributes = null;
 	protected String name = null;
 	protected boolean isCDATASection = false;
+	protected boolean isXmlCommentSection = false;
 	protected String value = null;
 
 	/**
@@ -156,6 +157,24 @@ public class ContentNode implements Cloneable
 		this.value = StringUtil.trimString( value );
 	}
 
+	/**
+	 * @return the isXmlCommentSection
+	 */
+	public boolean isXmlCommentSection( )
+	{
+		return isCDATASection;
+	}
+
+	/**
+	 * @param isXmlCommentSection
+	 *            the isXmlCommentSection to set
+	 */
+	public void setXmlCommentSection( boolean isXmlCommentSection )
+	{
+		this.isXmlCommentSection = isXmlCommentSection;
+	}
+	
+	
 	/**
 	 * @return the isCDATASection
 	 */

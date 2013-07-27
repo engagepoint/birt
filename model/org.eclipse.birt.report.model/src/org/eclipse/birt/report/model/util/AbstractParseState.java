@@ -276,4 +276,18 @@ public abstract class AbstractParseState
 	{
 
 	}
+	
+	/**
+	 * Sets the flag to indicate whether the value is a XML Comment. In default,
+	 * this method do nothing.
+	 * 
+	 * @param isXmlCommentSection
+	 *            <code>true</code> if it is a XML Comment. Otherwise
+	 *            <code>false</code>.
+	 */
+	
+	public void setIsXmlCommentSection( boolean isXmlCommentSection )
+	{
+
+	}
 }

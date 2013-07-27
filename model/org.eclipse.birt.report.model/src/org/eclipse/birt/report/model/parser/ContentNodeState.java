@@ -37,6 +37,13 @@ public class ContentNodeState extends AbstractParseState
 	 */
 
 	protected boolean isCDataSection = false;
+	
+	
+	/**
+	 * Status indicates whether this text is a XmlComment section or not.
+	 */
+
+	protected boolean isXmlCommentSection = false;
 
 	/**
 	 * The design file parser handler.
@@ -219,6 +226,20 @@ public class ContentNodeState extends AbstractParseState
 	public void setIsCDataSection( boolean isCDataSection )
 	{
 		this.isCDataSection = isCDataSection;
+	}
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.birt.report.model.util.AbstractParseState#setIsXmlCommentSection
+	 * (boolean)
+	 */
+
+	public void setIsXmlCommentSection( boolean isXmlCommentSection )
+	{
+		this.isXmlCommentSection = isXmlCommentSection;
 	}
 
 }
