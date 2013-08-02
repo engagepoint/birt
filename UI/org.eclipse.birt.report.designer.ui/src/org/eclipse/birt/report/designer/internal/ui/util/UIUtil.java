@@ -11,7 +11,9 @@
 
 package org.eclipse.birt.report.designer.internal.ui.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -1232,6 +1234,10 @@ public class UIUtil
 		catch ( IOException e )
 		{
 			logger.log( Level.SEVERE, e.getMessage( ), e );
+			directory = Platform.getInstanceLocation().getURL().getPath()
+					+ "/.metadata/.plugins/org.eclipse.birt.resources/";
+
+			createBlankTemplate();
 		}
 		return directory;
 	}
@@ -3162,5 +3168,74 @@ public class UIUtil
 			index++;
 		} while ( index < length );
 		return string;
+	}
+	
+	public static void createBlankTemplate() {
+		String destFilePath = Platform.getInstanceLocation().getURL().getPath()
+				+ "/.metadata/.plugins/org.eclipse.birt.resources/templates/blank_report.rpttemplate";
+
+		writeTextFile(destFilePath, getBlankTemplate());
+	}
+
+	private static void writeTextFile(String fileName, String s) {
+		File file = new File(fileName);
+		File parent = file.getParentFile();
+
+		if (!parent.exists() && !parent.mkdirs()) {
+			throw new IllegalStateException("Couldn't create dir: " + parent);
+		}
+		FileWriter output = null;
+		try {
+			output = new FileWriter(fileName);
+			BufferedWriter writer = new BufferedWriter(output);
+			writer.write(s);
+			try {
+				if (writer != null)
+					writer.close();
+			} catch (IOException e) {
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					// Nothing to do
+				}
+			}
+		}
+
+	}
+
+	private static String getBlankTemplate() {
+		String eol = System.getProperty("line.separator");  
+		StringBuilder template = new StringBuilder();
+		template.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(eol);
+		template.append("<report xmlns=\"http://www.eclipse.org/birt/2005/design\" version=\"3.2.20\" id=\"1\">").append(eol);
+		template.append("    <property name=\"units\">in</property>").append(eol);
+		template.append("    <html-property name=\"description\">WizardTemplateChoicePage.message.BlankReport</html-property>")	.append(eol);
+		template.append("    <text-property name=\"displayName\">WizardTemplateChoicePage.title.BlankReport</text-property>").append(eol);
+		template.append("   <property name=\"iconFile\">/templates/blank_report.gif</property>").append(eol);
+		template.append("	<styles>").append(eol);
+		template.append("        <style name=\"report\" id=\"4\">").append(eol);
+		template.append("            <property name=\"fontFamily\">sans-serif</property>").append(eol);
+		template.append("            <property name=\"fontSize\">10pt</property>").append(eol);
+		template.append("       </style>").append("\n");
+		template.append("	</styles>    ").append("\n");
+		template.append("	<page-setup>").append("\n");
+		template.append("        <simple-master-page name=\"Simple MasterPage\" id=\"2\">").append(eol);
+		template.append("            <page-footer>").append(eol);
+		template.append("                <text id=\"3\">").append(eol);
+		template.append("                    <property name=\"contentType\">html</property>").append(eol);
+		template.append("                    <text-property name=\"content\"><![CDATA[<value-of>new Date()</value-of>]]></text-property>").append(eol);
+		template.append("                </text>").append(eol);
+		template.append("            </page-footer>").append(eol);
+		template.append("        </simple-master-page>").append(eol);
+		template.append("    </page-setup>").append(eol);
+		template.append("</report>").append(eol);
+
+		return template.toString();
 	}
 }
